@@ -1,36 +1,27 @@
 package ru.kata.spring.boot_security.demo.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
-import ru.kata.spring.boot_security.demo.model.Role;
-import ru.kata.spring.boot_security.demo.model.User;
+import org.springframework.web.bind.annotation.GetMapping;
 import ru.kata.spring.boot_security.demo.service.UserService;
 
-import javax.validation.Valid;
 import java.security.Principal;
-import java.util.Collection;
-import java.util.List;
 
 @Controller
 public class UserController {
 
+    private final UserService userService;
 
-    final UserService userService;
-
+    @Autowired
     public UserController(UserService userService) {
         this.userService = userService;
     }
 
     @GetMapping("/user")
-    public String infoUser(Model model, Principal principal){
-        User user = userService.findByUsername(principal.getName());
-        Collection<Role> r = user.getRoles();
-        model.addAttribute("onlyUser",user);
-        return "onlyUser";
+    public String getUser(Principal principal, Model model) {
+        model.addAttribute("users", userService.index());
+        model.addAttribute("userLogin", userService.getUserByUsername(principal.getName()));
+        return "user";
     }
-
-    //Для админа
-
 }

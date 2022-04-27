@@ -1,30 +1,86 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
-    <title>Spring Security Example</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <title>User information-page</title>
 </head>
 <body>
-<h1>User, welcome spring boot security page!</h1>
-<table>
-    <thead>
-    <tr>
-        <th>Id</th>
-        <th>First name</th>
-        <th>Last name</th>
-        <th>Password</th>
-        <th>Mail</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
-        <td th:text="${username.getId()}"></td>
-        <td th:text="${username.username}"></td>
-        <td th:text="${username.lastname}"></td>
-        <td th:text="${username.password}"></td>
-        <td th:text="${username.email}"></td>
-    </tr>
-    </tbody>
-</table>
 
+<!-- Upper navigation-bar -->
+<div class="container-fluid">
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+        <div class="container">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active" style="color: white; width: 400px">
+                        <tr>
+                            <td th:text="${userLogin.email}"></td>
+                            <td th:each="role : ${userLogin.getRoles()}">
+                                <a th:text="'with roles: ' + ${role.name}"></a>
+                            </td>
+                        </tr>
+
+                    </li>
+                </ul>
+                <a style="margin-left: 750px" href="/logout">Logout</a>
+            </div>
+        </div>
+    </nav>
+
+
+    <div class="row">
+
+        <!--   Left navigation-bar between table of users and info about current user -->
+        <div class="col-3">
+            <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+
+                <a class="nav-link" style="background-color: aqua" aria-selected="false"
+                   href="#" th:href="@{/user}">User</a>
+
+            </div>
+        </div>
+
+        <div class="col-9">
+            <h1>User-information Panel</h1>
+            <div class="tab-content" id="nav-tabContent">
+                <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Last Name</th>
+                            <th>Email</th>
+                            <th>Username</th>
+                            <th>Role</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td th:text="${userLogin.id}"></td>
+                            <td th:text="${userLogin.getlastname()}"></td>
+                            <td th:text="${userLogin.email}"></td>
+                            <td th:text="${userLogin.username}"></td>
+                            <td><a th:each="role : ${userLogin.getNamesOfRoles()}" th:text="${role} + ' '"></a></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
 </body>
 </html>
