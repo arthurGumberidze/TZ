@@ -2,6 +2,9 @@ const allUsersTableBody = document.getElementById('all-users-table-body');
 const URLUsersApi = 'http://localhost:8080/rest/api/users';
 let users;
 
+
+
+
 async function loadIntoTablesBody(url, tableBody) {
     const response = await fetch(url);
     users = await response.json();

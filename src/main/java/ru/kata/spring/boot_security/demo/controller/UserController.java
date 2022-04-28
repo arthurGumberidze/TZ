@@ -24,4 +24,11 @@ public class UserController {
         model.addAttribute("userLogin", userService.getUserByUsername(principal.getName()));
         return "user";
     }
+
+    @GetMapping("/onlyUserss")
+    public String getOnlyUser(Principal principal, Model model) {
+        model.addAttribute("users", userService.index());
+        model.addAttribute("userLogin", userService.getUserByUsername(principal.getName()));
+        return "onlyusers";
+    }
 }
